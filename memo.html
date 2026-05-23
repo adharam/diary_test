@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conventions | Komarov Kowalewski Hydrogen</title>
+  <meta name="description" content="Komarov の Kowalewski basis for the hydrogen atom をコード化するための記号・符号・規格化の約束。" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --paper: #ffffff;
+      --ink: #1f2937;
+      --muted: #4b5563;
+      --line: #d1d5db;
+      --accent: #1d4ed8;
+      --accent-soft: #dbeafe;
+      --accent-deep: #1e3a8a;
+      --warn-soft: #fff7ed;
+      --warn-line: #fed7aa;
+      --max: 980px;
+      --shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Yu Gothic UI", sans-serif;
+      line-height: 1.9;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top, #eff6ff 0%, #f8fafc 28%, #f8fafc 100%);
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      font-size: 0.95rem;
+      color: var(--muted);
+      padding: 16px 0 8px;
+    }
+    .topbar a { color: var(--muted); }
+
+    header.hero { padding: 18px 0 28px; }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+      border: 1px solid rgba(209,213,219,0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 34px 28px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.28;
+      letter-spacing: 0.01em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    nav.quicknav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(248,250,252,0.82);
+      border-bottom: 1px solid rgba(209,213,219,0.85);
+    }
+
+    nav.quicknav .inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      padding: 12px 0;
+      font-size: 0.95rem;
+    }
+
+    main { padding: 26px 0 64px; }
+    section { margin-bottom: 28px; }
+
+    .panel {
+      background: var(--paper);
+      border: 1px solid rgba(209,213,219,0.92);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px 22px;
+    }
+
+    .section-head {
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .section-no {
+      display: inline-block;
+      min-width: 2.2em;
+      margin-right: 10px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    h2 { margin: 0; font-size: 1.55rem; line-height: 1.45; }
+    h3 { margin: 24px 0 10px; font-size: 1.12rem; line-height: 1.5; }
+    p { margin: 0 0 14px; }
+
+    .toc-list { margin: 0; padding-left: 1.2em; }
+    .toc-list li + li { margin-top: 8px; }
+
+    .note-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .warning-box {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--warn-line);
+      background: var(--warn-soft);
+      color: #7c2d12;
+      font-size: 0.95rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      overflow-x: auto;
+      display: table;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f3f4f6;
+      font-weight: 700;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.94em;
+      background: #f3f4f6;
+      border-radius: 6px;
+      padding: 0.12em 0.36em;
+    }
+
+    pre {
+      overflow-x: auto;
+      background: #0f172a;
+      color: #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      line-height: 1.6;
+      border: 1px solid #1f2937;
+    }
+
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+      border-radius: 0;
+      font-size: 0.92rem;
+    }
+
+    .math-note {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .mini-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding: 0 0 60px;
+    }
+
+    .footer-card {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(209,213,219,0.85);
+      border-radius: 18px;
+      padding: 18px 20px;
+    }
+
+    @media (max-width: 640px) {
+      .hero-card, .panel { padding: 22px 18px; }
+      nav.quicknav .inner { gap: 10px 12px; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ["\\(","\\)"]],
+        displayMath: [['$$','$$'], ["\\[","\\]"]],
+        processEscapes: true
+      },
+      TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      },
+      CommonHTML: { linebreaks: { automatic: true } },
+      "HTML-CSS": { linebreaks: { automatic: true } }
+    });
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"></script>
+</head>
+<body>
+  <div class="wrap topbar">
+    <a href="./index.html">HOME</a> / <a href="./conventions.html">Conventions</a> / <a href="./formulas.html">Formulas</a>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-card">
+        <div class="eyebrow">Komarov / Kowalewski basis / Hydrogen atom</div>
+        <h1>Conventions for Komarov Kowalewski Hydrogen</h1>
+        <p class="lead">Markdown レンダラーではなく MathJax を JavaScript で読み込む HTML 版です。古典版と量子版の計算規則を明確に分け，水素原子 / Kepler 問題の規格化もここで固定します。</p>
+        <div class="hero-meta">
+          <span class="chip">HTML + MathJax</span>
+          <span class="chip">古典版 / 量子版</span>
+          <span class="chip">符号規約</span>
+          <span class="chip">実装用ドキュメント</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="quicknav">
+    <div class="inner">
+      <a href="#toc">目次</a>
+      <a href="#sec2">MathJax</a>
+      <a href="#sec3">規格化</a>
+      <a href="#sec5">符号</a>
+      <a href="#sec6">古典/量子</a>
+      <a href="#sec8">Casimir</a>
+      <a href="#sec10">実装</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    
+<section id="toc">
+  <div class="panel">
+    <div class="section-head"><h2>目次</h2></div>
+    <ol class="toc-list">
+      <li><a href="#sec1">この文書の目的</a></li>
+      <li><a href="#sec2">HTML + MathJax 表示方針</a></li>
+      <li><a href="#sec3">Kepler / hydrogen の規格化</a></li>
+      <li><a href="#sec4">物理的保存量と抽象代数の区別</a></li>
+      <li><a href="#sec5">Komarov の符号規約</a></li>
+      <li><a href="#sec6">古典版と量子版</a></li>
+      <li><a href="#sec7">梯子演算子・随伴・反交換子</a></li>
+      <li><a href="#sec8">Casimir と束縛状態表示</a></li>
+      <li><a href="#sec9">命名規約</a></li>
+      <li><a href="#sec10">実装方針</a></li>
+    </ol>
+  </div>
+</section>
+
+<section id="sec1">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">1</span>この文書の目的</h2></div>
+    <p>
+      この文書は，リポジトリ内で使う記号・符号・規格化を固定するためのものです。
+      目的は，Komarov の <em>Kowalewski basis for the hydrogen atom</em> を，
+      古典 Lie--Poisson 計算，量子交換子計算，有限次元行列表現を通じて再現することです。
+    </p>
+    <p>
+      特に，次の三つを明確に区別します。
+    </p>
+    <ol>
+      <li>物理的な Kepler / hydrogen Hamiltonian</li>
+      <li>角運動量と Runge--Lenz ベクトルが生成する力学的対称性代数</li>
+      <li>Komarov が導入する Kowalewski 型の補助 Hamiltonian</li>
+    </ol>
+  </div>
+</section>
+
+<section id="sec2">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">2</span>HTML + MathJax 表示方針</h2></div>
+    <p>
+      GitHub Markdown や一部の Markdown preview では，$\mathrm{}$，$\mathbf{}$，$\boldsymbol{}$，$\bm{}$ などの
+      TeX コマンドがうまく表示されないことがあります。この HTML 版では，Markdown の数式レンダラーではなく
+      JavaScript で MathJax を読み込み，数式をブラウザ側でレンダリングします。
+    </p>
+    <div class="note-box">
+      このページでは，インライン数式は <code>$...$</code> または <code>\(...\)</code>，別行数式は <code>$$...$$</code> または
+      <code>\[...\]</code> で書きます。
+    </div>
+    <p>
+      したがって，HTML 版では以下のような TeX 記法を使ってよいことにします。
+    </p>
+    $$
+      H_{\mathrm{Kep}},\qquad L^{\mathrm{phys}},\qquad \mathbf{q},\qquad \mathsf{H},\qquad \mathcal{P}.
+    $$
+    <p>
+      ただし，将来 Markdown に戻す可能性がある箇所では，なるべく成分表示
+      $L=(L_1,L_2,L_3)$，$A=(A_1,A_2,A_3)$ も併記します。
+    </p>
+    <pre><code>&lt;script type="text/x-mathjax-config"&gt;
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ["\\(","\\)"]],
+      displayMath: [['$$','$$'], ["\\[","\\]"]],
+      processEscapes: true
+    }
+  });
+&lt;/script&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML"&gt;&lt;/script&gt;</code></pre>
+  </div>
+</section>
+
+<section id="sec3">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">3</span>Kepler / hydrogen の規格化</h2></div>
+    <p>原則として atomic units を用います。</p>
+    $$
+      \hbar=1,\qquad m=1,\qquad \kappa=1.
+    $$
+    <p>古典 Kepler Hamiltonian は</p>
+    $$
+      H_{\mathrm{Kep}}(q,p)=\frac{1}{2}|p|^2-\frac{1}{r},\qquad r=|q|.
+    $$
+    <p>量子 hydrogen Hamiltonian は</p>
+    $$
+      \widehat H_{\mathrm{Kep}}=-\frac{1}{2}\Delta-\frac{1}{r}.
+    $$
+    <p>束縛状態のエネルギーは</p>
+    $$
+      E_n=-\frac{1}{2n^2},\qquad n=1,2,3,\dots.
+    $$
+    <div class="warning-box">
+      Komarov の論文で現れる $H=L^2+L_3^2-A_1$ は，物理的な $H_{\mathrm{Kep}}$ ではありません。
+      このリポジトリでは，混同を避けるため Komarov の補助 Hamiltonian を $\mathsf{H}$ と書きます。
+    </div>
+  </div>
+</section>
+
+<section id="sec4">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">4</span>物理的保存量と抽象代数の区別</h2></div>
+    <p>物理的角運動量は</p>
+    $$
+      L^{\mathrm{phys}}=q\times p.
+    $$
+    <p>古典 Runge--Lenz ベクトルは</p>
+    $$
+      M^{\mathrm{phys}}=p\times L^{\mathrm{phys}}-\frac{q}{r}.
+    $$
+    <p>量子 Runge--Lenz ベクトルは，順序問題を避けるため対称化して</p>
+    $$
+      \widehat M^{\mathrm{phys}}
+      =\frac{1}{2}\left(\widehat p\times \widehat L^{\mathrm{phys}}
+      -\widehat L^{\mathrm{phys}}\times \widehat p\right)-\frac{\widehat q}{r}.
+    $$
+    <p>
+      一方，Komarov の計算では，物理的演算子そのものではなく，
+      それらから得られる抽象的な生成子 $L_i,A_i$ を使います。
+      以後，$L_i,A_i$ は Komarov 型の抽象代数の生成子とします。
+    </p>
+  </div>
+</section>
+
+<section id="sec5">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">5</span>Komarov の符号規約</h2></div>
+    <p>
+      Komarov は左作用型の符号を用いています。このリポジトリでは，抽象生成子 $L_i,A_i$ に対して
+      Komarov の符号規約を採用します。
+    </p>
+    <p>古典版では，Lie--Poisson 型の括弧を</p>
+    $$
+      [F,G]_{\mathrm{cl}}:=-\{F,G\}_{\mathrm{canonical}}
+    $$
+    <p>と定めます。すると</p>
+    $$
+      [L_i,L_j]_{\mathrm{cl}}=-\varepsilon_{ijk}L_k,
+    $$
+    $$
+      [L_i,A_j]_{\mathrm{cl}}=-\varepsilon_{ijk}A_k,
+    $$
+    $$
+      [A_i,A_j]_{\mathrm{cl}}=\mathcal{P}\,\varepsilon_{ijk}L_k.
+    $$
+    <p>パラメータ $\mathcal{P}$ は次の三つの場合を統一します。</p>
+    <table>
+      <thead><tr><th>Kepler energy</th><th>Algebra</th><th>Komarov parameter</th></tr></thead>
+      <tbody>
+        <tr><td>$E&lt;0$</td><td>$o(4)$</td><td>$\mathcal{P}=-1$</td></tr>
+        <tr><td>$E=0$</td><td>$e(3)$</td><td>$\mathcal{P}=0$</td></tr>
+        <tr><td>$E&gt;0$</td><td>$o(3,1)$</td><td>$\mathcal{P}=+1$</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="sec6">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">6</span>古典版と量子版</h2></div>
+    <div class="two-col">
+      <div class="mini-card">
+        <h3>古典版</h3>
+        <p>古典版では積は可換であり，順序を無視します。</p>
+        $$
+          XY=YX.
+        $$
+        <p>括弧 $[\ ,\ ]_{\mathrm{cl}}$ は Leibniz 則を満たします。</p>
+      </div>
+      <div class="mini-card">
+        <h3>量子版</h3>
+        <p>量子版では積は非可換であり，順序が本質的です。</p>
+        $$
+          XY\ne YX.
+        $$
+        <p>交換子は通常の $[X,Y]=XY-YX$ です。</p>
+      </div>
+    </div>
+    <p>量子版の交換関係は</p>
+    $$
+      [L_i,L_j]=-i\varepsilon_{ijk}L_k,
+    $$
+    $$
+      [L_i,A_j]=-i\varepsilon_{ijk}A_k,
+    $$
+    $$
+      [A_i,A_j]=i\mathcal{P}\,\varepsilon_{ijk}L_k.
+    $$
+    <p>
+      Komarov 型の面白さは，古典的には一つに見える Kowalewski 積分が，量子化では順序補正により
+      三つの非同値な量子版に分かれる点にあります。
+    </p>
+  </div>
+</section>
+
+<section id="sec7">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">7</span>梯子演算子・随伴・反交換子</h2></div>
+    <p>梯子変数は</p>
+    $$
+      L_{\pm}=L_1\pm iL_2,\qquad A_{\pm}=A_1\pm iA_2.
+    $$
+    <p>量子版では</p>
+    $$
+      L_{\pm}^{\dagger}=L_{\mp},\qquad A_{\pm}^{\dagger}=A_{\mp}.
+    $$
+    <p>積の随伴は</p>
+    $$
+      (XY)^{\dagger}=Y^{\dagger}X^{\dagger}.
+    $$
+    <p>反交換子は</p>
+    $$
+      \{X,Y\}=XY+YX
+    $$
+    <p>とします。</p>
+  </div>
+</section>
+
+<section id="sec8">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">8</span>Casimir と束縛状態表示</h2></div>
+    <p>統一代数の Casimir は</p>
+    $$
+      C_1=A^2-\mathcal{P}L^2,
+    $$
+    $$
+      C_2=A\cdot L=L\cdot A.
+    $$
+    <p>ここで</p>
+    $$
+      L^2=L_1^2+L_2^2+L_3^2,
+      \qquad
+      A^2=A_1^2+A_2^2+A_3^2.
+    $$
+    <p>束縛状態では $\mathcal{P}=-1$ なので</p>
+    $$
+      C_1=A^2+L^2.
+    $$
+    <p>標準的な hydrogen normalization では</p>
+    $$
+      E_n=-\frac{1}{2n^2},\qquad C_1=n^2-1,
+      \qquad C_2=0.
+    $$
+    <p>このとき</p>
+    $$
+      o(4)\simeq su(2)\oplus su(2),
+      \qquad
+      j_+=j_-={n-1\over 2}.
+    $$
+  </div>
+</section>
+
+<section id="sec9">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">9</span>命名規約</h2></div>
+    <table>
+      <thead><tr><th>意味</th><th>数式</th><th>Python 名</th></tr></thead>
+      <tbody>
+        <tr><td>物理的 Kepler Hamiltonian</td><td>$H_{\mathrm{Kep}}$</td><td><code>H_kep</code></td></tr>
+        <tr><td>量子 hydrogen Hamiltonian</td><td>$\widehat H_{\mathrm{Kep}}$</td><td><code>H_hydrogen</code></td></tr>
+        <tr><td>Komarov の補助 Hamiltonian</td><td>$\mathsf{H}$</td><td><code>H_kom</code></td></tr>
+        <tr><td>Komarov の量子積分</td><td>$\mathsf{K}$</td><td><code>K_kom</code></td></tr>
+        <tr><td>修正版 Hamiltonian</td><td>$\mathsf{H}_{(+)},\mathsf{H}_{(-)}$</td><td><code>H_plus</code>, <code>H_minus</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="sec10">
+  <div class="panel">
+    <div class="section-head"><h2><span class="section-no">10</span>実装方針</h2></div>
+    <p>古典と量子は，同じ記号を使っていても計算規則が違うため，モジュールを分けます。</p>
+    <pre><code>src/kowhydro/
+  algebra/
+    commutators.py        # abstract quantum commutators
+    lie_poisson.py        # classical Lie-Poisson bracket
+    normal_order.py       # noncommutative simplification rules
+
+  classical/
+    komarov_classical.py  # classical H, k_±, K_cl
+
+  quantum/
+    komarov_quantum.py    # quantum H, K, H_±, K_±</code></pre>
+    <p>テスト名も古典版・量子版を分けます。</p>
+    <pre><code>tests/test_classical_kowalewski.py
+tests/test_quantum_kowalewski.py</code></pre>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-card">
+      <p>
+        This page is an HTML + JavaScript version of the project notes. Equations are rendered by MathJax, not by the Markdown renderer.
+      </p>
+      <p>
+        Related pages: <a href="./conventions.html">Conventions</a> / <a href="./formulas.html">Formula Sheet</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
